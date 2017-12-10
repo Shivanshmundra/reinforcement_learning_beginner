@@ -7,15 +7,15 @@ class Contextual_bandits(object):
 	def __init__(self):
 		self.state = 0
 
-		self.bandits = np.array([[1.0, 2.5, -2.5, -3.6], [0.6, 2.3, -1.6, -3.4],
-			[2.0, 4.5, -2.7, -1.9], [2.4, 0.1, -0.5, -0.9]])
+		self.bandits = np.array([[-1.0, 4.5, -2.5, -3.6], [-0.6, 6.3, -1.6, -3.4],
+			[-2.0, 4.5, -2.7, -1.9], [2.4, 0.1, -0.5, -0.9]])
 
 		self.num_states = self.bandits.shape[0]
 		self.len_bandits = self.bandits.shape[1]
 
 	def get_bandit_state(self):
 
-		self.state = np.random.randint(1, self.num_states)
+		self.state = np.random.randint(0, self.num_states)
 
 		return self.state
 
@@ -63,12 +63,12 @@ class My_agent(object):
 tf.reset_default_graph()
 
 c_bandit = Contextual_bandits()
-my_agent = My_agent(learning_rate=0.01, state_size=c_bandit.num_states, action_size=c_bandit.len_bandits)
+my_agent = My_agent(learning_rate=0.001, state_size=c_bandit.num_states, action_size=c_bandit.len_bandits)
 
 weights = tf.trainable_variables()[0]#these are variables that can be updated using gradient_descent
 									#just used in model as a variable to be updated
 
-total_num_test = 2000
+total_num_test = 10000
 
 total_reward = np.zeros([c_bandit.num_states, c_bandit.len_bandits])
 
@@ -105,8 +105,9 @@ with tf.Session() as sess:
     	
 
 	for x in xrange(c_bandit.num_states):
-		print "The agent thinks action "+str(np.argmax(curr_weight[x])+1)+ "for bandit"+str(x+1)+"is best"
-		if np.argmax(curr_weight[x]==np.argmax(c_bandit.bandits[x])):
+		#print "The agent thinks action "+ str(np.argmax(curr_weight[x])+1)+ " for bandit "+str(x+1)+" is best"
+		print ((curr_weight[x]))
+		if np.argmax(curr_weight[x])==(np.argmax(c_bandit.bandits[x])):
 			print "....you are right"
 		else:
 			print"...sorry you are wrong"
