@@ -7,7 +7,7 @@ class Contextual_bandits(object):
 	def __init__(self):
 		self.state = 0
 
-		self.bandits = np.array([[-1.0, 4.5, -2.5, -3.6], [-0.6, 6.3, -1.6, -3.4],
+		self.bandits = np.array([[1.0, 4.5, -2.5, -3.6], [0.6, 6.3, -1.6, -3.4],
 			[-2.0, 4.5, -2.7, -1.9], [2.4, 0.1, -0.5, -0.9]])
 
 		self.num_states = self.bandits.shape[0]
@@ -68,11 +68,11 @@ my_agent = My_agent(learning_rate=0.001, state_size=c_bandit.num_states, action_
 weights = tf.trainable_variables()[0]#these are variables that can be updated using gradient_descent
 									#just used in model as a variable to be updated
 
-total_num_test = 10000
+total_num_test = 100000
 
 total_reward = np.zeros([c_bandit.num_states, c_bandit.len_bandits])
 
-e = 0.1
+e = 0.2
 
 init = tf.global_variables_initializer()
 
