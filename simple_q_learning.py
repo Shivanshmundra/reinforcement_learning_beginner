@@ -41,4 +41,4 @@ for i in xrange(1,total_episodes):
 print " Average Score over time is " +str(np.sum(reward_list)/(total_episodes))
 
 print "Q_table is "
-print (Q_table)
+# print (Q_table)
